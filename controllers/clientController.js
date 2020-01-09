@@ -22,5 +22,5 @@ exports.getAllClients = base.getAll(Client);
 exports.getClients = base.getOne(Client);
 
 // Don't update password on this 
-exports.updateClients = base.updateOne(Client);
-exports.deleteClients = base.deleteOne(Client);
+exports.updateClient = base.updateOne(Client);
+exports.deleteClient = base.deleteOne(Client);
