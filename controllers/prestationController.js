@@ -22,11 +22,9 @@ exports.addPrestation = async (req, res, next) => {
 
 exports.deletePrestation = async (req, res, next) => {
     try {
-        await Prestation.findByIdAndUpdate(req.body.id, {
-            active: false
-        });
+        await Prestation.deleteOne({ _id: mongoose.Types.ObjectId(req.body.id) });
 
-        res.status(204).json({
+        res.status(202).json({
             status: 'success',
             data: null
         });
