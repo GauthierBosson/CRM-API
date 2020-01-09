@@ -15,7 +15,7 @@ const createToken = id => {
 };
 
 // A update pour ajouter login client
-exports.login = async (req, res, next) => {
+exports.login = Model => async (req, res, next) => {
     try {
         const {
             email,
@@ -28,7 +28,7 @@ exports.login = async (req, res, next) => {
         }
 
         // 2) check if user exist and password is correct
-        const user = await User.findOne({
+        const user = await Model.findOne({
             email
         }).select('+password');
 
