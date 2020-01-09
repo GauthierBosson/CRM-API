@@ -41,7 +41,6 @@ const clientSchema = new mongoose.Schema({
         city: String,
         zip_code: Number,
         street: String,
-        required: true
     },
     active: {
         type: Boolean,

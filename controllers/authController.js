@@ -14,6 +14,7 @@ const createToken = id => {
     });
 };
 
+// A update pour ajouter login client
 exports.login = async (req, res, next) => {
     try {
         const {
