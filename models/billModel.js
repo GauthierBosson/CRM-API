@@ -3,40 +3,27 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'Please fill your name']
+const billSchema = new mongoose.Schema({
+    company: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     },
     email: {
         type: String,
         required: [true, 'Please fill your email'],
         unique: true,
         lowercase: true,
-        validate: [validator.isEmail, ' Please provide a valid email']
-
+        validate: [validator.isEmail, 'Please provide a valid email']
     },
     password: {
         type: String,
         required: [true, 'Please fill your password'],
         minLength: 6,
         select: false
-
-    },
-    passwordConfirm: {
-        type: String,
-        required: [true, 'Please fill your password confirm'],
-        validate: {
-            validator: function (el) {
-                // "this" works only on create and save 
-                return el === this.password;
-            },
-            message: 'Your password and confirmation password are not the same'
-        }
     },
     role: {
         type: String,
-        enum: ['admin', 'employee'],
+        enum: ['admin', 'teacher', 'student'],
         default: 'student'
     },
     active: {
@@ -52,7 +39,7 @@ const userSchema = new mongoose.Schema({
 
 // encrypt the password using 'bcryptjs'
 // Mongoose -> Document Middleware
-userSchema.pre('save', async function (next) {
+billSchema.pre('save', async function (next) {
     // check the password if it is modified
     if (!this.isModified('password')) {
         return next();
@@ -67,9 +54,9 @@ userSchema.pre('save', async function (next) {
 });
 
 // This is Instance Method that is gonna be available on all documents in a certain collection
-userSchema.methods.correctPassword = async function (typedPassword, originalPassword) {
+billSchema.methods.correctPassword = async function (typedPassword, originalPassword) {
     return await bcrypt.compare(typedPassword, originalPassword);
 };
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+const Client = mongoose.model('Client', clientSchema);
+module.exports = Client;
