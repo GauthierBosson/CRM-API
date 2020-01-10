@@ -12,7 +12,7 @@ router.use(authController.protect);
 
 router.delete('/deleteMe', clientController.deleteMe);
 
-router.use(authController.restrictTo('employee'));
+router.use(authController.restrictTo('employee', 'admin'));
 
 router
   .route('/')
@@ -23,5 +23,7 @@ router
   .get(clientController.getClients)
   .patch(clientController.updateClient)
   .delete(clientController.deleteClient)
+
+router.post('/signupClient', authController.signupClient);
 
 module.exports = router;

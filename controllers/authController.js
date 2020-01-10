@@ -3,6 +3,7 @@ const {
 } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const Client = require('../models/clientModel');
 const AppError = require('../utils/appError');
 
 
@@ -14,7 +15,6 @@ const createToken = id => {
     });
 };
 
-// A update pour ajouter login client
 exports.login = Model => async (req, res, next) => {
     try {
         const {
@@ -83,6 +83,40 @@ exports.signup = async (req, res, next) => {
 
 };
 
+exports.signupClient = async (req, res, next) => {
+    try {
+        const client = await Client.create({
+            company: req.body.company,
+            email: req.body.email,
+            lastname: req.body.lastname,
+            firstname: req.body.firstname,
+            password: req.body.password,
+            role: req.body.role,
+            phone: req.body.phone,
+            country: req.body.address.country,
+            state: req.body.address.state,
+            city: req.body.address.city,
+            zip_code: req.body.address.zip_code,
+            street: req.body.address.street
+        });
+
+        const token = createToken(client.id);
+
+        client.password = undefined;
+
+        res.status(201).json({
+            status: 'success',
+            token,
+            data: {
+                client
+            }
+        });
+
+    } catch (err) {
+        next(err);
+    }
+}
+
 exports.protect = async (req, res, next) => {
     try {
         // 1) check if the token is there
@@ -91,7 +125,7 @@ exports.protect = async (req, res, next) => {
             token = req.headers.authorization.split(' ')[1];
         }
         if (!token) {
-            return next(new AppError(401, 'fail', 'You are not logged in! Please login in to continue'), req, res, next);
+            return next(new AppError(401, 'fail', 'Veuillez vous connecter pour continuer'), req, res, next);
         }
 
 
@@ -116,7 +150,7 @@ exports.protect = async (req, res, next) => {
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return next(new AppError(403, 'fail', 'You are not allowed to do this action'), req, res, next);
+            return next(new AppError(403, 'fail', 'Vous n\'êtes pas autorisé à effectuer cette action'), req, res, next);
         }
         next();
     };
