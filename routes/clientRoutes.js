@@ -12,4 +12,16 @@ router.use(authController.protect);
 
 router.delete('/deleteMe', clientController.deleteMe);
 
+router.use(authController.restrictTo('employee'));
+
+router
+  .route('/')
+  .get(clientController.getAllClients)
+
+router
+  .route('/:id')
+  .get(clientController.getClients)
+  .patch(clientController.updateClient)
+  .delete(clientController.deleteClient)
+
 module.exports = router;
