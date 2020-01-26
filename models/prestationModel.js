@@ -19,5 +19,9 @@ const prestationSchema = new mongoose.Schema({
     }
 });
 
+prestationSchema.pre('save', async function(next) {
+  
+});
+
 const Prestation = mongoose.model('Prestation', prestationSchema);
 module.exports = Prestation;

@@ -4,15 +4,18 @@ const prestationController = require('../controllers/prestationController');
 const authController = require('../controllers/authController');
 
 // Only admin have permission to access for the below APIs 
+router.use(authController.protect);
 router.use(authController.restrictTo('admin'));
 
 router
     .route('/')
-    .get(prestationController.addPrestation);
-
+    .get(prestationController.getAllPrestations);
 
 router
     .route('/:id')
-    .delete(prestationController.deletePrestation);
+    .get(prestationController.getOnePrestation)
+    .post(prestationController.createPrestation)
+    .patch(prestationController.updatePrestation)
+    .delete(prestationController.deletePrestation)
 
 module.exports = router;

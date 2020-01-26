@@ -1,36 +1,16 @@
-const mongoose = require('mongoose');
 const Prestation = require('../models/prestationModel');
+const base = require('../controllers/baseController');
 
-exports.addPrestation = async (req, res, next) => {
-  try {
-    const prestation = await Prestation.create({
-        category: mongoose.Types.ObjectId(req.body.category),
-        name: req.body.name,
-        price: req.body.price,
-    })
-
-    res.status(201).json({
-        status: 'success',
-        data: {
-            prestation
-        }
-    })
-  } catch (error) {
-    next(err)
-  }
-};
-
-exports.deletePrestation = async (req, res, next) => {
+exports.createPrestation = async (req, res, next) => {
     try {
-        await Prestation.deleteOne({ _id: mongoose.Types.ObjectId(req.body.id) });
 
-        res.status(202).json({
-            status: 'success',
-            data: null
-        });
-
-
-    } catch (error) {
-        next(error);
+        const prestation = Prestation.create
+    } catch(err) {
+        next(err)
     }
-};
+}
+
+exports.deletePrestation = base.deleteOne(Prestation);
+exports.getAllPrestations = base.getAll(Prestation);
+exports.getOnePrestation = base.getOne(Prestation);
+exports.updatePrestation = base.updateOne(Prestation);
