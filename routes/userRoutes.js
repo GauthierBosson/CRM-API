@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-const authController = require('./../controllers/authController');
+const authController = require('../controllers/authController');
+const User = require('../models/userModel');
 
-
-router.post('/login', authController.login);
+router.post('/login', authController.login(User));
 router.post('/signup', authController.signup);
 
 // Protect all routes after this middleware

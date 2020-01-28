@@ -8,6 +8,10 @@ const cors = require('cors');
 
 
 const userRoutes = require('./routes/userRoutes');
+const clientRoutes = require('./routes/clientRoutes');
+const prestationRoutes = require('./routes/prestationRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const commandRoutes = require('./routes/commandRoutes');
 const globalErrHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const app = express();
@@ -43,6 +47,10 @@ app.use(hpp());
 
 // Routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/clients', clientRoutes);
+app.use('/api/v1/prestations', prestationRoutes);
+app.use('/api/v1/categories', categoryRoutes);
+app.use('/api/v1/commands', commandRoutes);
 
 // handle undefined Routes
 app.use('*', (req, res, next) => {
