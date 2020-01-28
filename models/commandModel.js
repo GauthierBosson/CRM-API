@@ -8,7 +8,7 @@ const commandSchema = new mongoose.Schema({
             ref: 'Prestation',
             required: true
         },
-        number: {
+        quantity: {
             type: Number,
             required: true
         }
