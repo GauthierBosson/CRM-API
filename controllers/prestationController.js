@@ -1,15 +1,7 @@
 const Prestation = require('../models/prestationModel');
 const base = require('../controllers/baseController');
 
-exports.createPrestation = async (req, res, next) => {
-    try {
-
-        const prestation = Prestation.create
-    } catch(err) {
-        next(err)
-    }
-}
-
+exports.createPrestation = base.createOne(Prestation);
 exports.deletePrestation = base.deleteOne(Prestation);
 exports.getAllPrestations = base.getAll(Prestation);
 exports.getOnePrestation = base.getOne(Prestation);
