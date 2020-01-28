@@ -12,9 +12,12 @@ router
     .get(prestationController.getAllPrestations);
 
 router
+    .route('/add')
+    .post(prestationController.createPrestation)
+
+router
     .route('/:id')
     .get(prestationController.getOnePrestation)
-    .post(prestationController.createPrestation)
     .patch(prestationController.updatePrestation)
     .delete(prestationController.deletePrestation)
 

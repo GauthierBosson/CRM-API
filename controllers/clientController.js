@@ -18,6 +18,7 @@ exports.deleteMe = async (req, res, next) => {
     }
 };
 
+exports.createClient = base.createOne(Client);
 exports.getAllClients = base.getAll(Client);
 exports.getClients = base.getOne(Client);
 

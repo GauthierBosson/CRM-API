@@ -19,6 +19,10 @@ router
   .get(clientController.getAllClients)
 
 router
+  .route('/add')
+  .post(clientController.createClient)
+
+router
   .route('/:id')
   .get(clientController.getClients)
   .patch(clientController.updateClient)
