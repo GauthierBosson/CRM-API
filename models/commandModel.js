@@ -5,6 +5,7 @@ const commandSchema = new mongoose.Schema({
     {
         prestation : {
             type: mongoose.Types.ObjectId,
+            ref: 'Prestation',
             required: true
         },
         number: {
@@ -15,8 +16,19 @@ const commandSchema = new mongoose.Schema({
   ],
   client: {
     type: mongoose.Types.ObjectId,
+    ref: 'Client',
     required: true
   }
+});
+
+commandSchema.pre('find', function() {
+  this.populate('prestations.prestation');
+  this.populate('client')
+});
+
+commandSchema.pre('findOne', function() {
+  this.populate('prestations.prestation');
+  this.populate('client')
 });
 
 const Command = mongoose.model('Command', commandSchema);
