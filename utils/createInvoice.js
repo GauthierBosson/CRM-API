@@ -10,7 +10,7 @@ function createInvoice(invoice, path) {
   generateFooter(doc);
 
   doc.end();
-  //const file = doc.pipe(fs.createWriteStream(path));
+
   return doc;
 }
 
