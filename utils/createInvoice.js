@@ -10,12 +10,13 @@ function createInvoice(invoice, path) {
   generateFooter(doc);
 
   doc.end();
-  doc.pipe(fs.createWriteStream(path));
+  //const file = doc.pipe(fs.createWriteStream(path));
+  return doc;
 }
 
 function generateHeader(doc) {
   doc
-    .image("logo.jpg", 50, 45, { width: 50 })
+    .image("logo.png", 50, 45, { width: 50 })
     .fillColor("#444444")
     .fontSize(20)
     .text("Web Partner", 110, 57)

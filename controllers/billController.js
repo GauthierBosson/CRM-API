@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const Bill = require('../models/billModel');
 const Command = require('../models/commandModel');
 const base = require('./baseController');
@@ -40,7 +42,14 @@ exports.createBill = async (req, res, next) => {
       invoice_nr: 1234
     };
 
-    createInvoice(invoice, 'testinvoice.pdf');
+    const file = createInvoice(invoice, 'testinvoice.pdf');
+    file.pipe(fs.createWriteStream('testinvoice.pdf'));
+    const stat = fs.statSync('testinvoice.pdf');
+    res.setHeader('Content-Length', stat.size);
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=testinvoice.pdf');
+    file.pipe(res);
+
   } catch (error) {
     next(error);
   }
