@@ -13,6 +13,7 @@ const prestationRoutes = require('./routes/prestationRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const commandRoutes = require('./routes/commandRoutes');
 const billRoutes = require('./routes/billRoutes');
+const appointementRoutes = require('./routes/appointementRoutes');
 const globalErrHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const app = express();
@@ -53,6 +54,7 @@ app.use('/api/v1/prestations', prestationRoutes);
 app.use('/api/v1/categories', categoryRoutes);
 app.use('/api/v1/commands', commandRoutes);
 app.use('/api/v1/bills', billRoutes);
+app.use('/api/v1/appointements', appointementRoutes);
 
 // handle undefined Routes
 app.use('*', (req, res, next) => {

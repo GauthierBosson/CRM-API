@@ -49,9 +49,6 @@ exports.createBill = async (req, res, next) => {
     invoiceNumberArr[2] = parseInt(invoiceNumberArr[2]) + 1;
     const newInvoiceNumber = invoiceNumberArr.join('_');
 
-    console.log(invoiceNumber);
-    console.log(newInvoiceNumber);
-
     const options = {
       files: 'invoiceNum.txt',
       from: invoiceNumber,
