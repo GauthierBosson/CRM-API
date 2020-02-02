@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const base = require('./baseController');
+const { sendEmail } = require('../utils/sendEmail');
 
 exports.deleteMe = async (req, res, next) => {
     try {
