@@ -30,4 +30,6 @@ router
 
 router.post('/signupClient', authController.signupClient);
 
+router.patch('/deactivate/:id', clientController.deactivateClient);
+
 module.exports = router;

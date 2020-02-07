@@ -97,3 +97,25 @@ exports.getAll = Model => async (req, res, next) => {
     }
 
 };
+
+exports.deactivate = Model => async (req, res, next) => {
+    try {
+        const doc = await Model.findByIdAndUpdate(req.params.id, { active: false }, {
+            new: true,
+            runValidators: true
+        });
+
+        if (!doc) {
+            return next(new AppError(404, 'fail', 'No document found with that id'), req, res, next);
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                data: doc
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+}
