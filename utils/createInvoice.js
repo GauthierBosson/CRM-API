@@ -1,12 +1,25 @@
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 
-function createInvoice(invoice, path) {
+function createInvoice(invoice) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
   generateHeader(doc);
-  generateCustomerInformation(doc, invoice);
+  generateCustomerInformation(doc, invoice, "Facture");
   generateInvoiceTable(doc, invoice);
+  generateFooter(doc);
+
+  doc.end();
+
+  return doc;
+}
+
+function createQuote(quote) {
+  let doc = new PDFDocument({ size: "A4", margin: 50 })
+
+  generateHeader(doc);
+  generateCustomerInformation(doc, quote, "Devis");
+  generateInvoiceTable(doc, quote);
   generateFooter(doc);
 
   doc.end();
@@ -27,11 +40,11 @@ function generateHeader(doc) {
     .moveDown();
 }
 
-function generateCustomerInformation(doc, invoice) {
+function generateCustomerInformation(doc, invoice, type) {
   doc
     .fillColor("#444444")
     .fontSize(20)
-    .text("Facture", 50, 160);
+    .text(type, 50, 160);
 
   generateHr(doc, 185);
 
@@ -178,7 +191,7 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(cents) {
-  return "$" + (cents / 100).toFixed(2);
+  return "€" + (cents / 100).toFixed(2);
 }
 
 function formatDate(date) {
@@ -190,5 +203,6 @@ function formatDate(date) {
 }
 
 module.exports = {
-  createInvoice
+  createInvoice,
+  createQuote
 };

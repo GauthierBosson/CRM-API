@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const base = require('./baseController');
+const { sendEmail } = require('../utils/sendEmail');
 
 exports.deleteMe = async (req, res, next) => {
     try {
@@ -24,3 +25,4 @@ exports.getUser = base.getOne(User);
 // Don't update password on this 
 exports.updateUser = base.updateOne(User);
 exports.deleteUser = base.deleteOne(User);
+exports.deactivateUser = base.deactivate(User);

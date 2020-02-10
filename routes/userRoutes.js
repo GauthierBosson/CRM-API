@@ -7,13 +7,11 @@ const User = require('../models/userModel');
 router.post('/login', authController.login(User));
 router.post('/signup', authController.signup);
 
-// Protect all routes after this middleware
 router.use(authController.protect);
 
 router.delete('/deleteMe', userController.deleteMe);
 
-// Only admin have permission to access for the below APIs 
-router.use(authController.restrictTo('admin'));
+router.use(authController.restrictTo('admin', 'employee'));
 
 router
     .route('/')
@@ -25,5 +23,7 @@ router
     .get(userController.getUser)
     .patch(userController.updateUser)
     .delete(userController.deleteUser);
+
+router.patch('/deactivate/:id', userController.deactivateUser);
 
 module.exports = router;
