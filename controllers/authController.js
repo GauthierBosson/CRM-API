@@ -5,11 +5,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Client = require('../models/clientModel');
 const AppError = require('../utils/appError');
+const { signUpMail } = require('../utils/sendEmail');
+const generator = require('generate-password');
 
 
-const createToken = id => {
+const createToken = (id, role) => {
     return jwt.sign({
-        id
+        id,
+        role
     }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
@@ -37,7 +40,7 @@ exports.login = Model => async (req, res, next) => {
         }
 
         // 3) All correct, send jwt to client
-        const token = createToken(user.id);
+        const token = createToken(user.id, user.role);
 
         // Remove the password from the output 
         user.password = undefined;
@@ -56,22 +59,23 @@ exports.login = Model => async (req, res, next) => {
 };
 
 exports.signup = async (req, res, next) => {
+    req.body.password = generator.generate({
+        length: 16,
+        uppercase: true,
+        numbers: true
+    });
+
     try {
         const user = await User.create({
             name: req.body.name,
-            email: req.body.email,
             password: req.body.password,
-            passwordConfirm: req.body.passwordConfirm,
+            email: req.body.email,
             role: req.body.role,
         });
 
-        const token = createToken(user.id);
-
-        user.password = undefined;
+        await signUpMail(user.email, req.body.password)
 
         res.status(201).json({
-            status: 'success',
-            token,
             data: {
                 user
             }

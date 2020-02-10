@@ -34,7 +34,7 @@ async function sendEmail() {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
 
-async function signUpMail(email) {
+async function signUpMail(email, password) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
@@ -50,15 +50,13 @@ async function signUpMail(email) {
     }
   });
 
-
-
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    from: '"Web Partner CRM" <crm@web-partner.com>', // sender address
     to: email, // list of receivers
     subject: "Votre accès au CRM", // Subject line
-    text: "Bonjour, vos accès sont : " + email + ", mot de passe : ", // plain text body
-    html: "<b>Bonjour, vos accès sont :</b>" // html body
+    text: "Bonjour, vos accès sont : email : " + email + ", mot de passe : " + password, // plain text body
+    html: `<b>Bonjour, vos accès sont : email : ${email}, mot de passe : ${password}</b>` // html body
   });
 
   console.log("Message sent: %s", info.messageId);

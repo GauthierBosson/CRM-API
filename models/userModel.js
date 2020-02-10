@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     passwordConfirm: {
         type: String,
-        required: [true, 'Please fill your password confirm'],
+        required: /*[true, 'Please fill your password confirm']*/ false,
         validate: {
             validator: function (el) {
                 // "this" works only on create and save 
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin', 'employee'],
-        default: 'student'
+        default: 'employee'
     },
     active: {
         type: Boolean,
