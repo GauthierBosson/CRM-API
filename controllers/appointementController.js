@@ -11,6 +11,7 @@ exports.createEvents = async (req, res, next) => {
   }
 }
 
+exports.createAppointement = base.createOne(Appointement);
 exports.confirmAppointement = base.updateOne(Appointement);
 exports.getAllAppointements = base.getAll(Appointement);
 exports.getOneAppointement = base.getOne(Appointement);
