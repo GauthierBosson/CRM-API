@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const appointementSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
+    ref: 'User'
   },
   clientId: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
+    ref: 'Client'
   },
   begin: {
     type: Date,

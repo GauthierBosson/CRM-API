@@ -16,6 +16,7 @@ const billRoutes = require('./routes/billRoutes');
 const appointementRoutes = require('./routes/appointementRoutes');
 const globalErrHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
+const attachEvent = require('./utils/attachEvent');
 const app = express();
 
 // Allow Cross-Origin requests
@@ -46,7 +47,7 @@ app.use(xss());
 // Prevent parameter pollution
 app.use(hpp());
 
-
+app.use(attachEvent);
 // Routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/clients', clientRoutes);

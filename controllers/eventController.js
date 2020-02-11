@@ -4,9 +4,8 @@ const Event = require('../models/eventModel');
 exports.addEvent = async (req, res, next) => {
   try {
     const event = await Event.create({
-        name: req.body.name,
-        description: req.body.description,
-        user: mongoose.Types.ObjectId(req.body.user)
+        userId: req.userId,
+        description: req.description,
     })
 
     res.status(201).json({
@@ -16,6 +15,6 @@ exports.addEvent = async (req, res, next) => {
         }
     })
   } catch (error) {
-    next(err)
+    next(error)
   }
 };
