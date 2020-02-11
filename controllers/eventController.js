@@ -3,17 +3,12 @@ const Event = require('../models/eventModel');
 
 exports.addEvent = async (req, res, next) => {
   try {
-    const event = await Event.create({
+    await Event.create({
         userId: req.userId,
         description: req.description,
     })
 
-    res.status(201).json({
-        status: 'success',
-        data: {
-            event
-        }
-    })
+    next();
   } catch (error) {
     next(error)
   }
