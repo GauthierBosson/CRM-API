@@ -12,12 +12,11 @@ router
 router
   .route('/:id')
   .get(appointementController.getOneAppointement)
-  .post(appointementController.createAppointement)
+  .patch(appointementController.updateAppointement)
 
 router
-  .route('/confirm/:id')
-  .post(appointementController.updateAppointement)
-
+  .route('/add')
+  .post(appointementController.createAppointement)
 
 router
   .route('/generateIcs')

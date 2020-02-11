@@ -24,6 +24,11 @@ const appointementSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  cancelled: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 
