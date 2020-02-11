@@ -16,7 +16,7 @@ router
 
 router
   .route('/confirm/:id')
-  .post(appointementController.confirmAppointement)
+  .post(appointementController.updateAppointement)
 
 
 router
