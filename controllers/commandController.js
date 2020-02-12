@@ -5,3 +5,4 @@ exports.createCommand = base.createOne(Command);
 exports.deleteCommand = base.deleteOne(Command);
 exports.getAllCommands = base.getAll(Command);
 exports.getOneCommand = base.getOne(Command);
+exports.getCommandsByUser = base.getByUserId(Command)

@@ -19,4 +19,8 @@ router
   .get(commandController.getOneCommand)
   .delete(commandController.deleteCommand)
 
+router
+  .route('/user/:id')
+  .get(commandController.getCommandsByUser)
+
 module.exports = router;
