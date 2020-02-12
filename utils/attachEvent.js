@@ -30,7 +30,11 @@ module.exports = async function attachEvent(req, res, next) {
           case 'appointements':
             await eventController.addEvent({ userId: token.id, description: 'Création d\'un rendez-vous' }, res, next)
             break;
+          case 'bills':
+            await eventController.addEvent({ userId: token.id, description: 'Génération d\'une facture / devis en PDF' }, res, next)
+            break;
           default:
+            next();
             break;
         }
         break;
@@ -55,6 +59,7 @@ module.exports = async function attachEvent(req, res, next) {
             await eventController.addEvent({ userId: token.id, description: 'Modification d\'un rendez-vous' }, res, next)
             break;
           default:
+            next();
             break;
         }
         break;
@@ -79,10 +84,12 @@ module.exports = async function attachEvent(req, res, next) {
             await eventController.addEvent({ userId: token.id, description: 'Suppression d\'un rendez-vous' }, res, next)
             break;
           default:
+            next();
             break;
         }
         break;
       default:
+        next();
         break;
     }
   } catch(error) {

@@ -1,5 +1,6 @@
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 exports.deleteOne = Model => async (req, res, next) => {
     try {
@@ -111,6 +112,33 @@ exports.deactivate = Model => async (req, res, next) => {
 
         res.status(200).json({
             status: 'success',
+            data: {
+                data: doc
+            }
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.getByUserId = Model => async (req, res, next) => {
+    const objId = new ObjectId(req.params.id);
+
+    try {
+        const features = new APIFeatures(Model.find({ 
+            $or: [
+                { 'userId':  objId },
+                { 'clientId': objId }
+            ]
+        }), req.query)
+        .sort()
+        .paginate();
+
+        const doc = await features.query;
+
+        res.status(200).json({
+            status: 'success',
+            results: doc.length,
             data: {
                 data: doc
             }
