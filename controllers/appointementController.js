@@ -15,3 +15,4 @@ exports.createAppointement = base.createOne(Appointement);
 exports.updateAppointement = base.updateOne(Appointement);
 exports.getAllAppointements = base.getAll(Appointement);
 exports.getOneAppointement = base.getOne(Appointement);
+exports.getAppointementsByUserId = base.getByUserId(Appointement);
