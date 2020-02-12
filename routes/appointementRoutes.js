@@ -6,6 +6,10 @@ const authController = require('../controllers/authController');
 router.use(authController.protect);
 
 router
+  .route('/user/:id')
+  .get(appointementController.getAppointementsByUserId)
+
+router
   .route('/')
   .get(appointementController.getAllAppointements)
 

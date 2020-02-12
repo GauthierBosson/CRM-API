@@ -1,21 +1,20 @@
 const mongoose = require('mongoose');
 const Event = require('../models/eventModel');
+const base = require('./baseController');
 
 exports.addEvent = async (req, res, next) => {
   try {
-    const event = await Event.create({
-        name: req.body.name,
-        description: req.body.description,
-        user: mongoose.Types.ObjectId(req.body.user)
+    await Event.create({
+        userId: req.userId,
+        description: req.description,
     })
 
-    res.status(201).json({
-        status: 'success',
-        data: {
-            event
-        }
-    })
+    next();
   } catch (error) {
-    next(err)
+    next(error)
   }
 };
+
+exports.getAllEvents = base.getAll(Event);
+exports.getOneEvent = base.getOne(Event);
+exports.getEventsByUser = base.getByUserId(Event);

@@ -14,7 +14,7 @@ const commandSchema = new mongoose.Schema({
         }
     }
   ],
-  client: {
+  clientId: {
     type: mongoose.Types.ObjectId,
     ref: 'Client',
     required: true
