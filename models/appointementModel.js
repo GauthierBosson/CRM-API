@@ -8,7 +8,7 @@ const appointementSchema = new mongoose.Schema({
   },
   clientId: {
     type: mongoose.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'Client'
   },
   begin: {
