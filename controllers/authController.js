@@ -94,6 +94,8 @@ exports.signupClient = async (req, res, next) => {
         uppercase: true,
         numbers: true
     });
+
+    req.body.role = 'client';
     
     try {
         const idCompany = await Company.findOne({ name: req.body.company })
