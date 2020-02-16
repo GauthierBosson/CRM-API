@@ -88,6 +88,12 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.signupClient = async (req, res, next) => {
+    req.body.password = generator.generate({
+        length: 16,
+        uppercase: true,
+        numbers: true
+    });
+    
     try {
         const client = await Client.create({
             company: req.body.company,

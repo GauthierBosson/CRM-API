@@ -8,6 +8,7 @@ const cors = require('cors');
 
 
 const userRoutes = require('./routes/userRoutes');
+const companyRoutes = require('./routes/companyRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const prestationRoutes = require('./routes/prestationRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -48,9 +49,10 @@ app.use(xss());
 // Prevent parameter pollution
 app.use(hpp());
 
-app.use(attachEvent);
+//app.use(attachEvent);
 // Routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/companies', companyRoutes);
 app.use('/api/v1/clients', clientRoutes);
 app.use('/api/v1/prestations', prestationRoutes);
 app.use('/api/v1/categories', categoryRoutes);
