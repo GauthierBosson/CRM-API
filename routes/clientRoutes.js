@@ -19,8 +19,8 @@ router
   .get(clientController.getAllClients)
 
 router
-  .route('/add')
-  .post(clientController.createClient)
+  .route('/signupClient')
+  .post(authController.signupClient)
 
 router
   .route('/:id')

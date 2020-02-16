@@ -1,4 +1,5 @@
 const Client = require('../models/clientModel');
+const Company = require('../models/companyModel');
 const base = require('./baseController');
 
 exports.deleteMe = async (req, res, next) => {
@@ -18,7 +19,6 @@ exports.deleteMe = async (req, res, next) => {
     }
 };
 
-exports.createClient = base.createOne(Client);
 exports.getAllClients = base.getAll(Client);
 exports.getClients = base.getOne(Client);
 

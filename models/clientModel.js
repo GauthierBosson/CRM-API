@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs');
 
 const clientSchema = new mongoose.Schema({
     company: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'Company',
         required: true
     },
     email: {
@@ -33,8 +34,7 @@ const clientSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
-        validate: [validator.isMobilePhone, 'Veuillez founir un numéro de téléphone valide']
+        //validate: [validator.isMobilePhone, 'Veuillez founir un numéro de téléphone valide']
     },
     address: {
         country: String,
@@ -45,7 +45,7 @@ const clientSchema = new mongoose.Schema({
     },
     active: {
         type: Boolean,
-        default: true,
+        default: false,
         select: false
     },
     created_at: {
