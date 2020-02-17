@@ -11,7 +11,7 @@ const appointementSchema = new mongoose.Schema({
     required: false,
     ref: 'Client'
   },
-  begin: {
+  start: {
     type: Date,
     required: true
   },
@@ -19,7 +19,7 @@ const appointementSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  summary: {
+  title: {
     type: String
   },
   confirmed: {

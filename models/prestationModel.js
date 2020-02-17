@@ -9,8 +9,8 @@ const prestationSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    price: {
-      type: Number,
+    description: {
+      type: String,
       required: true
     },
     created_at: {
