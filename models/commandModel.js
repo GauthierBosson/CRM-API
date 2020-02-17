@@ -21,12 +21,12 @@ const commandSchema = new mongoose.Schema({
 });
 
 commandSchema.pre('find', function() {
-  this.populate('prestations.prestation');
+  this.populate('prestations');
   this.populate('client')
 });
 
 commandSchema.pre('findOne', function() {
-  this.populate('prestations.prestation');
+  this.populate('prestations');
   this.populate('client')
 });
 
