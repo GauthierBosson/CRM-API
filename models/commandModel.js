@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 
 const commandSchema = new mongoose.Schema({
+  project: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+    ref: 'Project'
+  },
   prestations: [
     {
-        prestation : {
-            type: mongoose.Types.ObjectId,
-            ref: 'Prestation',
-            required: true
-        },
-        quantity: {
-            type: Number,
-            required: true
-        }
+      type: mongoose.Types.ObjectId,
+      ref: 'Prestation',
+      required: true
     }
   ],
   clientId: {
