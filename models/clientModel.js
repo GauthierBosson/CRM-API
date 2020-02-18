@@ -68,6 +68,14 @@ clientSchema.pre('save', async function (next) {
     next();
 });
 
+clientSchema.pre('find', function() {
+    this.populate('company');
+});
+  
+clientSchema.pre('findOne', function() {
+    this.populate('company');
+});
+
 // This is Instance Method that is gonna be available on all documents in a certain collection
 clientSchema.methods.correctPassword = async function (typedPassword, originalPassword) {
     return await bcrypt.compare(typedPassword, originalPassword);

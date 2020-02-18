@@ -8,26 +8,27 @@ const commandSchema = new mongoose.Schema({
   },
   prestations: [
     {
-      type: mongoose.Types.ObjectId,
-      ref: 'Prestation',
-      required: true
+      prestation: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Prestation',
+        required: true
+      },
+      price: {
+        type: Number,
+        required: true
+      }
     }
   ],
-  clientId: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Client',
-    required: true
-  }
 });
 
 commandSchema.pre('find', function() {
-  this.populate('prestations');
-  this.populate('client')
+  this.populate('prestations.prestation');
+  this.populate('project')
 });
 
 commandSchema.pre('findOne', function() {
-  this.populate('prestations');
-  this.populate('client')
+  this.populate('prestations.prestation');
+  this.populate('project')
 });
 
 const Command = mongoose.model('Command', commandSchema);
