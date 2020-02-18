@@ -23,4 +23,8 @@ router
   .route('/user/:id')
   .get(commandController.getCommandsByUser)
 
+router
+  .route('/project/:id')
+  .get(commandController.getCommandsByProject)
+
 module.exports = router;
