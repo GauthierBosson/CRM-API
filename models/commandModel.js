@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const commandSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
   project: {
     type: mongoose.Types.ObjectId,
     required: true,
@@ -16,9 +20,21 @@ const commandSchema = new mongoose.Schema({
       price: {
         type: Number,
         required: true
+      },
+      quantity: {
+        type: Number,
+        required: true
       }
     }
   ],
+  dueDate: {
+    type: Date,
+    required: true
+  },
+  total: {
+    type: Number,
+    required: true
+  }
 });
 
 commandSchema.pre('find', function() {
