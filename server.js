@@ -12,7 +12,7 @@ process.on('uncaughtException', err => {
 
 const app = require('./app');
 
-const database = process.env.NODE_ENVIRONMENT === 'development' ? 'mongodb://localhost/crm-project' : process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
+const database = process.env.NODE_ENVIRONMENT === 'development' ? 'mongodb://localhost/crm-project' : process.env.MONGODB_URI;
 
 // Connect the database
 mongoose.connect(database, {
@@ -24,7 +24,7 @@ mongoose.connect(database, {
 });
 
 // Start the server
-const port = process.env.PORT;
+const port = process.env.PORT | 3000;
 app.listen(port, () => {
     console.log(`Application is running on port ${port}`);
 });

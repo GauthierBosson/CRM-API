@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs');
 
 const clientSchema = new mongoose.Schema({
     company: {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: 'Company',
         required: true
     },
     email: {
@@ -16,10 +17,12 @@ const clientSchema = new mongoose.Schema({
         validate: [validator.isEmail, 'Please provide a valid email']
     },
     lastname: {
-        type: String
+        type: String,
+        required: true
     },
     firstname: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
         type: String,
@@ -33,19 +36,19 @@ const clientSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
         validate: [validator.isMobilePhone, 'Veuillez founir un numéro de téléphone valide']
     },
-    address: {
-        country: String,
-        state: String,
-        city: String,
-        zip_code: Number,
-        street: String,
+    notes: {
+        text: {
+            type: String,
+        },
+        date: {
+            type: Date
+        }
     },
     active: {
         type: Boolean,
-        default: true,
+        default: false,
         select: false
     },
     created_at: {
@@ -66,6 +69,14 @@ clientSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 12);
 
     next();
+});
+
+clientSchema.pre('find', function() {
+    this.populate('company');
+});
+  
+clientSchema.pre('findOne', function() {
+    this.populate('company');
 });
 
 // This is Instance Method that is gonna be available on all documents in a certain collection

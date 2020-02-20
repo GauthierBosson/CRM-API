@@ -4,6 +4,7 @@ const {
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Client = require('../models/clientModel');
+const Company = require('../models/companyModel');
 const AppError = require('../utils/appError');
 const { signUpMail } = require('../utils/sendEmail');
 const generator = require('generate-password');
@@ -88,36 +89,35 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.signupClient = async (req, res, next) => {
+    req.body.password = generator.generate({
+        length: 16,
+        uppercase: true,
+        numbers: true
+    });
+
+    req.body.role = 'client';
+    
     try {
-        const client = await Client.create({
-            company: req.body.company,
-            email: req.body.email,
-            lastname: req.body.lastname,
-            firstname: req.body.firstname,
-            password: req.body.password,
-            role: req.body.role,
-            phone: req.body.phone,
-            country: req.body.address.country,
-            state: req.body.address.state,
-            city: req.body.address.city,
-            zip_code: req.body.address.zip_code,
-            street: req.body.address.street
-        });
+        const idCompany = await Company.findOne({ name: req.body.company })
+        if (!idCompany) {
+            const newCompany = await Company.create({ name: req.body.company })
+            req.body.company = newCompany._id;
+        } else {
+            req.body.company = idCompany;
+        }
+        
+        const client = await Client.create(req.body);
 
-        const token = createToken(client.id);
-
-        client.password = undefined;
+        await signUpMail(client.email, req.body.password);
 
         res.status(201).json({
             status: 'success',
-            token,
             data: {
                 client
             }
         });
-
-    } catch (err) {
-        next(err);
+    } catch(error) {
+        next(error)
     }
 }
 
@@ -138,12 +138,19 @@ exports.protect = async (req, res, next) => {
 
         // 3) check if the user is exist (not deleted)
         const user = await User.findById(decode.id);
-        if (!user) {
-            return next(new AppError(401, 'fail', 'This user is no longer exist'), req, res, next);
+        const client = await Client.findById(decode.id);
+        
+        if (user) {
+            req.user = user;
+            return next();
         }
 
-        req.user = user;
-        next();
+        if (client) {
+            req.user = client;
+            return next();
+        }
+
+        return next(new AppError(401, 'fail', 'This user is no longer exist'), req, res, next);
 
     } catch (err) {
         next(err);

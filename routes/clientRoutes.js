@@ -12,15 +12,23 @@ router.use(authController.protect);
 
 router.delete('/deleteMe', clientController.deleteMe);
 
-router.use(authController.restrictTo('employee', 'admin'));
+router.use(authController.restrictTo('employee', 'admin', 'client'));
+
+router
+  .route('/clientRole')
+  .get(clientController.getClientsByRole)
+
+router
+  .route('/prospectRole')
+  .get(clientController.getProspectsByRole)
 
 router
   .route('/')
   .get(clientController.getAllClients)
 
 router
-  .route('/add')
-  .post(clientController.createClient)
+  .route('/signupClient')
+  .post(authController.signupClient)
 
 router
   .route('/:id')

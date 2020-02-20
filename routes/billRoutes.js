@@ -5,10 +5,14 @@ const authController = require('../controllers/authController');
 
 router.use(authController.protect);
 
-router.use(authController.restrictTo('admin', 'employee'));
+router.use(authController.restrictTo('admin', 'employee', 'client'));
 
 router
-  .route('/create/:id')
+  .route('/create/invoice/:id')
   .post(billController.createBill)
+
+router
+  .route('/create/quote/:id')
+  .post(billController.createQuote)
 
 module.exports = router;
