@@ -16,5 +16,9 @@ const projectSchema = new mongoose.Schema({
     }
 });
 
+projectSchema.pre('findOne', function() {
+  this.populate('clientId');
+})
+
 const Project = mongoose.model('Project', projectSchema);
 module.exports = Project;
