@@ -1,5 +1,6 @@
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
+const moment = require('moment');
 
 function createInvoice(invoice) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
@@ -7,7 +8,7 @@ function createInvoice(invoice) {
   generateHeader(doc);
   generateCustomerInformation(doc, invoice, "Facture");
   generateInvoiceTable(doc, invoice);
-  generateFooter(doc);
+  generateFooter(doc, invoice);
 
   doc.end();
 
@@ -108,9 +109,9 @@ function generateInvoiceTable(doc, invoice) {
       position,
       item.item,
       item.description,
-      formatCurrency(item.amount / item.quantity),
+      formatCurrency(item.amount),
       item.quantity,
-      formatCurrency(item.amount)
+      formatCurrency(item.amount * item.quantity)
     );
 
     generateHr(doc, position + 20);
@@ -145,18 +146,18 @@ function generateInvoiceTable(doc, invoice) {
     duePosition,
     "",
     "",
-    "Balance Due",
+    "Total TTC",
     "",
     formatCurrency(invoice.subtotal - invoice.paid)
   );
   doc.font("Helvetica");
 }
 
-function generateFooter(doc) {
+function generateFooter(doc, invoice) {
   doc
     .fontSize(10)
     .text(
-      "Payment is due within 15 days. Thank you for your business.",
+      "Le paiement est dûe au " + moment(invoice.dueDate).format('DD/MM/YYYY'),
       50,
       780,
       { align: "center", width: 500 }
