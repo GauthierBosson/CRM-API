@@ -4,7 +4,14 @@ const commandController = require('../controllers/commandController');
 const authController = require('../controllers/authController');
 
 router.use(authController.protect);
-router.use(authController.restrictTo('admin', 'employee'));
+router.use(authController.restrictTo('admin', 'employee', 'client'));
+
+router
+  .route('/project/:id')
+  .get(commandController.getCommandsByProject)
+
+
+router.use(authController.restrictTo('admin', 'employee', 'client'));
 
 router
   .route('/')
@@ -22,9 +29,5 @@ router
 router
   .route('/user/:id')
   .get(commandController.getCommandsByUser)
-
-router
-  .route('/project/:id')
-  .get(commandController.getCommandsByProject)
 
 module.exports = router;

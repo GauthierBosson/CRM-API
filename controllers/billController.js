@@ -16,6 +16,8 @@ exports.createBill = async (req, res, next) => {
 
     const command = doc;
 
+    console.log(command)
+
     const items = []
     command.prestations.map(prestation => {
       let obj = {};
@@ -32,12 +34,12 @@ exports.createBill = async (req, res, next) => {
 
     const invoice = {
       shipping: {
-        name: command.client.firstname + ' ' + command.client.lastname,
-        address: command.client.address.street,
-        city: command.client.address.city,
-        state: command.client.address.state,
-        country: command.client.address.country,
-        postal_code: command.client.address.zip_code
+        name: command.project.clientId.name,
+        address: command.project.clientId.address.street,
+        city: command.project.clientId.address.city,
+        state: command.project.clientId.address.state,
+        country: command.project.clientId.address.country,
+        postal_code: command.project.clientId.address.zip_code
       },
       items: items,
       subtotal: 8000,

@@ -23,12 +23,24 @@ const commandSchema = new mongoose.Schema({
 
 commandSchema.pre('find', function() {
   this.populate('prestations.prestation');
-  this.populate('project')
+  this.populate({
+    path: 'project',
+    populate: {
+      path: 'clientId',
+      model: 'Company'
+    }
+  })
 });
 
 commandSchema.pre('findOne', function() {
   this.populate('prestations.prestation');
-  this.populate('project')
+  this.populate({
+    path: 'project',
+    populate: {
+      path: 'clientId',
+      model: 'Company'
+    }
+  })
 });
 
 const Command = mongoose.model('Command', commandSchema);

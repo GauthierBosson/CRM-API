@@ -6,6 +6,13 @@ const companySchema = new mongoose.Schema({
       required: true,
       unique: true
     },
+    address: {
+      country: String,
+      state: String,
+      city: String,
+      zip_code: Number,
+      street: String,
+    },
     created_at: {
       type: Date,
       default: Date.now

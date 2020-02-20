@@ -17,10 +17,12 @@ const clientSchema = new mongoose.Schema({
         validate: [validator.isEmail, 'Please provide a valid email']
     },
     lastname: {
-        type: String
+        type: String,
+        required: true
     },
     firstname: {
-        type: String
+        type: String,
+        required: true
     },
     password: {
         type: String,
@@ -34,14 +36,15 @@ const clientSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        //validate: [validator.isMobilePhone, 'Veuillez founir un numéro de téléphone valide']
+        validate: [validator.isMobilePhone, 'Veuillez founir un numéro de téléphone valide']
     },
-    address: {
-        country: String,
-        state: String,
-        city: String,
-        zip_code: Number,
-        street: String,
+    notes: {
+        text: {
+            type: String,
+        },
+        date: {
+            type: Date
+        }
     },
     active: {
         type: Boolean,

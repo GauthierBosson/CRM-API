@@ -138,12 +138,19 @@ exports.protect = async (req, res, next) => {
 
         // 3) check if the user is exist (not deleted)
         const user = await User.findById(decode.id);
-        if (!user) {
-            return next(new AppError(401, 'fail', 'This user is no longer exist'), req, res, next);
+        const client = await Client.findById(decode.id);
+        
+        if (user) {
+            req.user = user;
+            return next();
         }
 
-        req.user = user;
-        next();
+        if (client) {
+            req.user = client;
+            return next();
+        }
+
+        return next(new AppError(401, 'fail', 'This user is no longer exist'), req, res, next);
 
     } catch (err) {
         next(err);

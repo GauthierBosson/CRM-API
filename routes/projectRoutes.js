@@ -6,10 +6,14 @@ const authController = require('../controllers/authController');
 router.use(authController.protect);
 
 router
+  .route('/user/:id')
+  .get(projectController.getProjectsByUserId)
+
+router
   .route('/')
   .get(projectController.getAllProjects)
 
-router.use(authController.restrictTo('admin'));
+router.use(authController.restrictTo('admin', 'client'));
 
 router
   .route('/add')
@@ -20,9 +24,5 @@ router
   .get(projectController.getOneProject)
   .patch(projectController.updateProject)
   .delete(projectController.deleteProject)
-
-router
-  .route('/user/:id')
-  .get(projectController.getProjectsByUserId)
 
 module.exports = router;
