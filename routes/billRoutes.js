@@ -5,7 +5,7 @@ const authController = require('../controllers/authController');
 
 router.use(authController.protect);
 
-router.use(authController.restrictTo('admin', 'employee'));
+router.use(authController.restrictTo('admin', 'employee', 'client'));
 
 router
   .route('/create/invoice/:id')
