@@ -13,10 +13,6 @@ const prestationSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    quantity: {
-      type: Number,
-      required: true
-    },
     created_at: {
       type: Date,
       default: Date.now
