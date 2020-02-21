@@ -25,7 +25,7 @@ exports.createBill = async (req, res, next) => {
       obj.item = prestation.prestation.name;
       obj.description = 'test';
       obj.quantity = prestation.quantity;
-      obj.amount = prestation.prestation.price;
+      obj.amount = prestation.price * 100;
 
       items.push(obj);
     })
@@ -42,9 +42,10 @@ exports.createBill = async (req, res, next) => {
         postal_code: command.project.clientId.address.zip_code
       },
       items: items,
-      subtotal: 8000,
+      subtotal: command.total * 100,
       paid: 0,
-      invoice_nr: invoiceNumber
+      invoice_nr: invoiceNumber,
+      dueDate: command.dueDate
     };
 
     let invoiceNumberArr = invoiceNumber.split('_');
